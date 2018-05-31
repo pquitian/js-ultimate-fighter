@@ -24,6 +24,7 @@ Game.prototype.moveAll = function(){
     this.fighter.stand();
     this.fighter.move();
     this.fighter.goBack();
+    this.fighter.jump();
 }
 
 Game.prototype.fight = function() {
