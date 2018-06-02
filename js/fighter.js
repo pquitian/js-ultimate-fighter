@@ -2,7 +2,6 @@ function Fighter(ctx) {
     this.ctx = ctx;
 
     this.img = new Image();
-    this.img.src = "img/fighters/goku_3.png";
     this.img.frameIndex = 0;
 
     this.x = this.ctx.canvas.width - 300; 
@@ -13,14 +12,14 @@ function Fighter(ctx) {
     this.vy = 0; 
     this.gravity = 0.5;
 
-    this.faceRight = true;
-    this.faceLeft = false;
     this.fight = false;
+    this.isJumping = false;
 
     this.img.animateEvery = 15;
     this.drawCount = 0;
 
     this.state = 'stand';
+    this.health = 100;
 }
 
 Fighter.prototype.animate = function() {
@@ -72,12 +71,16 @@ Fighter.prototype.draw = function() {
        this.animate();
         this.drawCount = 0;
     }
+
+    //console.log(this.isJumping);
     
 }
 
 // Basic Movements
 Fighter.prototype.stand = function() {
     this.state = 'stand';
+    this.attack = false;
+
     this.img.rowIndex = 0;
     this.width = 145;
     this.height = 167;
@@ -91,16 +94,15 @@ Fighter.prototype.stand = function() {
 }
 
 Fighter.prototype.jump = function() {
-    if (this.state !== 'jump' && this.state !== 'jump&move') {
-        this.state = 'jump';        
-    }
-    
+
+    this.isJumping = true; 
+    this.attack = false;
+
     this.img.rowIndex = 550;
     this.width = 145; 
     this.height = 180; 
     this.img.frames = 6;
     this.img.animateEvery = 6;
-    
 
     this.vy += this.gravity;
     this.y0 *= this.vy;
@@ -108,6 +110,7 @@ Fighter.prototype.jump = function() {
     if(this.y0 >= this.y){
         this.vy = 0; 
         this.y0 = this.y;
+        this.isJumping = false;
         this.state = 'stand'
     }
 
@@ -122,15 +125,15 @@ Fighter.prototype.move = function(){
     //this.state = 'move';
     if(this.x <= 0) return;
 
-    if (this.state !== 'jump' && this.state !== 'jump&move') {
-        this.img.rowIndex = 165; 
-        this.width = 145; 
-        this.height = 180; 
-        this.img.frames = 6;
-        this.img.animateEvery = 30;
-    }
-
-    if (this.state === 'jump') {
+    this.attack = false;
+  
+    this.img.rowIndex = 165; 
+    this.width = 145;
+    this.height = 180; 
+    this.img.frames = 6;
+    this.img.animateEvery = 30;
+    
+    if (this.isJumping === true) {
         this.state = 'jump&move';
     }
 
@@ -141,6 +144,8 @@ Fighter.prototype.goBack = function() {
     //this.state = 'go-back'; 
 
     if(this.x + this.width >= this.ctx.canvas.width ) return
+
+    this.attack = false;
 
     this.img.rowIndex = 345; 
     this.width = 145; 
@@ -153,6 +158,8 @@ Fighter.prototype.goBack = function() {
 
 Fighter.prototype.punch = function() {
     this.state = 'punch';
+    this.attack = true;
+
     this.img.rowIndex = 755;
     this.img.frames = 6;
     this.width = 200;
@@ -167,6 +174,8 @@ Fighter.prototype.punch = function() {
 
 Fighter.prototype.kick = function(){
     this.state = 'kick';
+    this.attack = true;
+
     this.img.rowIndex = 935;
     this.img.frames = 5; 
     this.width = 185;
@@ -179,14 +188,13 @@ Fighter.prototype.kick = function(){
     }
 }
 
+Fighter.prototype.damaged = function(){
+    this.health--;
+    //TODO: restar a health la fuerza de cada ataque
+}
+
 
 //Key listeners
-Fighter.prototype.TOP = 38;
-Fighter.prototype.DOWN = 40;
-Fighter.prototype.LEFT = 37;
-Fighter.prototype.RIGHT = 39;
-Fighter.prototype.PUNCH = 77;
-Fighter.prototype.KICK = 78;
 
 Fighter.prototype.onKeyDown = function(code) {
     switch(code) {
@@ -215,3 +223,4 @@ Fighter.prototype.onKeyUp = function(code) {
     }
     
 };
+

@@ -3,8 +3,16 @@ function Game(canvas) {
     
     this.bg = new Landscape(this.ctx);
     this.fighter = new Fighter(this.ctx);
-    this.goku = new Goku(this.ctx);
 
+    this.goku = new Goku(
+        this.ctx, 
+        "img/fighters/goku_3.png"
+    );
+
+    this.ryu = new Ryu(
+        this.ctx, 
+        "img/fighters/ryu_3.png"
+    );
 
     this.setKeyboardListeners();
 }
@@ -12,31 +20,38 @@ function Game(canvas) {
 Game.prototype.start = function() {
     this.intervalId = setInterval(function() {
         this.drawAll();
+        this.fight();
     }.bind(this), 16);
 };
 
 Game.prototype.drawAll = function(){
     this.bg.draw();
-    this.fighter.draw();
+    
+    this.goku.draw();
+    this.ryu.draw();
 }
 
-Game.prototype.moveAll = function(){
-    this.fighter.stand();
-    this.fighter.move();
-    this.fighter.goBack();
-    this.fighter.jump();
-}
+// Game.prototype.moveAll = function(){ 
+// }
+
 
 Game.prototype.fight = function() {
-    this.fighter.punch();
+    var dx = (this.goku.x <= this.ryu.x + this.ryu.width) && (this.ryu.x <= this.goku.x + this.goku.width);
+    var dy = this.ryu.y + this.ryu.height >= this.goku.y;
+    if(dx && dy){
+        this.ryu.damaged();
+        console.log('toma hostia');
+    }  
 }
 
 Game.prototype.setKeyboardListeners = function() {
     document.onkeydown = function(event) {
-      this.fighter.onKeyDown(event.keyCode);
+      this.goku.onKeyDown(event.keyCode);
+      this.ryu.onKeyDown(event.keyCode);
     }.bind(this);
   
     document.onkeyup = function(event) {
-      this.fighter.onKeyUp(event.keyCode);
+      this.goku.onKeyUp(event.keyCode);
+      this.ryu.onKeyUp(event.keyCode);
     }.bind(this);
-  };
+};
