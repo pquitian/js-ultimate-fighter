@@ -1,6 +1,7 @@
 function Goku(ctx, imagesource) {
     Fighter.call(this, ctx, imagesource);
     this.img.src = imagesource;
+    
 
     this.faced = 'left';
 }

@@ -20,6 +20,7 @@ function Fighter(ctx) {
 
     this.state = 'stand';
     this.health = 100;
+    
 }
 
 Fighter.prototype.animate = function() {
@@ -71,8 +72,6 @@ Fighter.prototype.draw = function() {
        this.animate();
         this.drawCount = 0;
     }
-
-    //console.log(this.isJumping);
     
 }
 
@@ -158,6 +157,7 @@ Fighter.prototype.goBack = function() {
 
 Fighter.prototype.punch = function() {
     this.state = 'punch';
+    
     this.attack = true;
 
     this.img.rowIndex = 755;
@@ -180,7 +180,7 @@ Fighter.prototype.kick = function(){
     this.img.frames = 5; 
     this.width = 185;
     this.height = 215; 
-    this.img.animateEvery = 10; 
+    this.img.animateEvery = 5; 
 
     if(this.img.frameIndex >= this.img.frames) {
         this.img.frameIndex = 0;

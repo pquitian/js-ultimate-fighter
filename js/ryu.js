@@ -2,7 +2,10 @@ function Ryu(ctx, imagesource) {
     Fighter.call(this, ctx, imagesource);
     this.img.src = imagesource;
 
+    this.x = 200;
+
     this.faced = 'right';
+    //this.punchSound = new Audio('sounds/goku/punch.wav');
 }
 
 Ryu.prototype = Object.create(Fighter.prototype); 
@@ -14,3 +17,4 @@ Ryu.prototype.LEFT = 65;
 Ryu.prototype.RIGHT = 68;
 Ryu.prototype.PUNCH = 49;
 Ryu.prototype.KICK = 50;
+
