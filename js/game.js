@@ -39,13 +39,17 @@ Game.prototype.drawAll = function(){
 }
 
 Game.prototype.fight = function() {
-    var dx = (this.goku.x <= this.ryu.x + this.ryu.width) && (this.ryu.x <= this.goku.x + this.goku.width);
-    var dy = this.ryu.y + this.ryu.height >= this.goku.y;
-    if(dx && dy){
-        this.ryu.receiveDamage();
-        console.log('toma hostia');
-        
-    }  
+    if(this.goku.attack){
+        var dx = (this.goku.x <= this.ryu.x + this.ryu.width) && (this.ryu.x <= this.goku.x + this.goku.width);
+
+        var dy = this.ryu.y + this.ryu.height >= this.goku.y;
+
+        if(dx && dy){
+            this.ryu.receiveDamage();
+            console.log('toma hostia');
+        }  
+    }
+    
 }
 
 Game.prototype.setKeyboardListeners = function() {
@@ -77,5 +81,7 @@ Game.prototype.soundHandler = function() {
             gokuJump.play();
             break;
     }
+
+    
 }
 
