@@ -42,8 +42,9 @@ Game.prototype.fight = function() {
     var dx = (this.goku.x <= this.ryu.x + this.ryu.width) && (this.ryu.x <= this.goku.x + this.goku.width);
     var dy = this.ryu.y + this.ryu.height >= this.goku.y;
     if(dx && dy){
-        this.ryu.damaged();
+        this.ryu.receiveDamage();
         console.log('toma hostia');
+        
     }  
 }
 
@@ -62,9 +63,19 @@ Game.prototype.setKeyboardListeners = function() {
 
 Game.prototype.soundHandler = function() {
     var gokuPunch = new Audio('sounds/goku/punch.wav');
+    var gokuKick = new Audio('sounds/goku/kick.wav');
+    var gokuJump = new Audio('sounds/goku/jump.wav');
 
-    if(this.goku.state === 'punch') {
-        gokuPunch.play();
+    switch(this.goku.state){
+        case 'punch':
+            gokuPunch.play();
+            break;
+        case 'kick':
+            gokuKick.play();
+            break; 
+        case 'jump':
+            gokuJump.play();
+            break;
     }
-    
 }
+

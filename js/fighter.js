@@ -8,7 +8,7 @@ function Fighter(ctx) {
     this.y0 = 400;
     this.y = this.y0;
 
-    this.vx = 5;
+    this.vx = 10;
     this.vy = 0; 
     this.gravity = 0.5;
 
@@ -181,9 +181,19 @@ Fighter.prototype.kick = function(){
     }
 }
 
-Fighter.prototype.damaged = function(){
-    this.health--;
-    //TODO: restar a health la fuerza de cada ataque
+Fighter.prototype.receiveDamage = function(){
+    this.health--; //TODO: restar a health la fuerza de cada ataque
+    this.displace();
+    console.log(this.health);
+    
+}
+
+Fighter.prototype.displace = function(){
+    if(this.x + this.width >= this.ctx.canvas.width || this.x <= 0) {
+        return
+    } else {
+        this.x -= 30;
+    }
 }
 
 
@@ -216,4 +226,3 @@ Fighter.prototype.onKeyUp = function(code) {
     }
     
 };
-
