@@ -12,8 +12,7 @@ function Fighter(ctx) {
     this.vy = 0; 
     this.gravity = 0.5;
 
-    this.fight = false;
-    this.isJumping = false;
+    this.attack = false;
 
     this.img.animateEvery = 15;
     this.drawCount = 0;
@@ -41,10 +40,6 @@ Fighter.prototype.animate = function() {
         case 'jump':
             this.jump();
             break;
-        case 'jump&move':
-            this.jump();
-            this.move();
-            break;
         case 'kick': 
             this.kick(); 
             break;
@@ -63,7 +58,7 @@ Fighter.prototype.draw = function() {
         this.width,
         this.height,
         this.x, 
-        this.y0, 
+        this.y, 
         this.width , 
         this.height
     );
@@ -72,7 +67,7 @@ Fighter.prototype.draw = function() {
        this.animate();
         this.drawCount = 0;
     }
-    
+
 }
 
 // Basic Movements
@@ -85,7 +80,7 @@ Fighter.prototype.stand = function() {
     this.height = 167;
     this.img.frames = 4;
     this.img.animateEvery = 15;
-    this.y0 = 400;
+    this.y = 400;
 
     if(this.img.frameIndex >= this.img.frames) {
         this.img.frameIndex = 0;
@@ -93,8 +88,8 @@ Fighter.prototype.stand = function() {
 }
 
 Fighter.prototype.jump = function() {
-
-    this.isJumping = true; 
+    this.state = 'jump';
+ 
     this.attack = false;
 
     this.img.rowIndex = 550;
@@ -104,15 +99,17 @@ Fighter.prototype.jump = function() {
     this.img.animateEvery = 6;
 
     this.vy += this.gravity;
-    this.y0 *= this.vy;
+    this.y *= this.vy;
 
-    if(this.y0 >= this.y){
+    if(this.isJumping()){
         this.vy = 0; 
-        this.y0 = this.y;
-        this.isJumping = false;
+        this.y = this.y0;
         this.state = 'stand'
     }
+}
 
+Fighter.prototype.isJumping = function(){
+    return this.y >= this.y0;
 }
 
 Fighter.prototype.bend = function() {
@@ -131,10 +128,6 @@ Fighter.prototype.move = function(){
     this.height = 180; 
     this.img.frames = 6;
     this.img.animateEvery = 30;
-    
-    if (this.isJumping === true) {
-        this.state = 'jump&move';
-    }
 
     this.x -= this.vx;
 }
@@ -180,7 +173,7 @@ Fighter.prototype.kick = function(){
     this.img.frames = 5; 
     this.width = 185;
     this.height = 215; 
-    this.img.animateEvery = 5; 
+    this.img.animateEvery = 10; 
 
     if(this.img.frameIndex >= this.img.frames) {
         this.img.frameIndex = 0;
