@@ -6,12 +6,12 @@ function Game(canvas) {
 
     this.goku = new Goku(
         this.ctx, 
-        "img/fighters/goku_3.png", 
+        "img/fighters/goku_4.png", 
     );
 
     this.ryu = new Ryu(
         this.ctx, 
-        "img/fighters/ryu_3.png", 
+        "img/fighters/ryu_4.png", 
     );
 
     this.setKeyboardListeners();
@@ -25,6 +25,8 @@ Game.prototype.start = function() {
     this.intervalId = setInterval(function() {
         this.drawAll();
         this.fight();
+        this.gameOver();
+
     }.bind(this), 16);
 
     
@@ -39,17 +41,35 @@ Game.prototype.drawAll = function(){
 }
 
 Game.prototype.fight = function() {
-    if(this.goku.attack){
-        var dx = (this.goku.x <= this.ryu.x + this.ryu.width) && (this.ryu.x <= this.goku.x + this.goku.width);
-
-        var dy = this.ryu.y + this.ryu.height >= this.goku.y;
-
-        if(dx && dy){
-            this.ryu.receiveDamage();
-            console.log('toma hostia');
-        }  
+    if(this.goku.attack) {
+      this.ryu.isCollision(this.goku)
     }
+
+    if (this.ryu.attack) {
+        this.goku.isCollision(this.ryu)
+    }
+}
+
+// Game.prototype.fight = function() {
+//     if(this.goku.attack){
+//         var gx = (this.goku.x <= this.ryu.x + this.ryu.width) && (this.ryu.x <= this.goku.x + this.goku.width);
+
+//         var gy = this.ryu.y + this.ryu.height >= this.goku.y;
+
+//         if(gx && gy){
+//             this.ryu.receiveDamage();
+//             console.log('toma hostia');
+//         }  
+//     }
+
+//     
     
+// }
+
+Game.prototype.gameOver = function(){
+    if(this.ryu.health <= 0) {
+        console.log('GAME OVER');
+    }
 }
 
 Game.prototype.setKeyboardListeners = function() {

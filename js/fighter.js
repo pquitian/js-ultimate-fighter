@@ -19,6 +19,7 @@ function Fighter(ctx) {
 
     this.state = 'stand';
     this.health = 100;
+    //this.healthBar = new HealthBar();
     
 }
 
@@ -80,7 +81,7 @@ Fighter.prototype.stand = function() {
     this.height = 167;
     this.img.frames = 4;
     this.img.animateEvery = 15;
-    this.y = 400;
+    this.y = this.y0;
 
     if(this.img.frameIndex >= this.img.frames) {
         this.img.frameIndex = 0;
@@ -159,6 +160,7 @@ Fighter.prototype.punch = function() {
     this.height = 180;
     this.img.animateEvery = 5;
 
+
     if(this.img.frameIndex >= this.img.frames) {
         this.img.frameIndex = 0;
         this.stand();
@@ -173,7 +175,8 @@ Fighter.prototype.kick = function(){
     this.img.frames = 5; 
     this.width = 185;
     this.height = 215; 
-    this.img.animateEvery = 10; 
+    this.img.animateEvery = 5;
+    this.y = 365; 
 
     if(this.img.frameIndex >= this.img.frames) {
         this.img.frameIndex = 0;
@@ -189,11 +192,31 @@ Fighter.prototype.receiveDamage = function(){
 }
 
 Fighter.prototype.displace = function(){
+
+    this.img.rowIndex = 1295;
+    this.width = 130; 
+    this.height = 180; 
+    this.img.frames = 5;
+    this.img.animateEvery = 8;
+
     if(this.x + this.width >= this.ctx.canvas.width || this.x <= 0) {
         return
     } else {
         this.x -= 30;
     }
+
+
+}
+
+Fighter.prototype.isCollision = function(rival) {
+    var rx = (rival.x <= this.x + this.width) && (this.x <= rival.x + rival.width);
+
+    var ry = this.y + this.height >= rival.y;
+
+    if(rx && ry){
+        this.receiveDamage();
+        console.log('toma hostia');
+    }  
 }
 
 
