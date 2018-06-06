@@ -197,14 +197,13 @@ Fighter.prototype.displace = function(){
     this.width = 130; 
     this.height = 180; 
     this.img.frames = 5;
-    this.img.animateEvery = 8;
+    this.img.animateEvery = 10;
 
     if(this.x + this.width >= this.ctx.canvas.width || this.x <= 0) {
         return
     } else {
-        this.x -= 30;
+        this.faced === 'right' ? this.x -= 30 : this.x += 30
     }
-
 
 }
 
