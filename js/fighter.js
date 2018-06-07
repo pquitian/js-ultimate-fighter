@@ -12,7 +12,10 @@ function Fighter(ctx) {
     this.vy = 0; 
     this.gravity = 0.5;
 
+    this.faced = null;
+
     this.attack = false;
+    this.defend = false;
 
     this.img.animateEvery = 15;
     this.drawCount = 0;
@@ -21,7 +24,7 @@ function Fighter(ctx) {
     this.health = 100;
     //this.barPos = 10;
 
-    this.healthbar = new HealthBar(this.ctx, this.health, this.barPos);
+    this.healthbar = new HealthBar(this.ctx, this.health);
     this.keys = [];
     
 }
@@ -47,9 +50,10 @@ Fighter.prototype.animate = function() {
         case 'kick': 
             this.kick(); 
             break;
+        case 'bend':
+            this.bend();
+            break;
     }
-
-    
 }
 
 Fighter.prototype.draw = function() {
@@ -71,14 +75,25 @@ Fighter.prototype.draw = function() {
        this.animate();
         this.drawCount = 0;
     }
+
     this.healthbar.draw();
-    
+
+    //this.checkIfFaced();
+}
+
+Fighter.prototype.checkIfFaced = function(rival) {
+    //console.log(rival);
+    var myPos = this.x + this.width;
+    var rivPos = rival.x + rival.width;
+
+    myPos > rivPos ? this.faced = 'left' : this.faced = 'right';
 }
 
 // Basic Movements
 Fighter.prototype.stand = function() {
     this.state = 'stand';
     this.attack = false;
+    this.defend = false;
 
     this.img.rowIndex = 0;
     this.width = 145;
@@ -98,6 +113,7 @@ Fighter.prototype.jump = function() {
     this.state = 'jump';
  
     this.attack = false;
+    this.defend = false;
 
     this.img.rowIndex = 550;
     this.width = 145; 
@@ -119,23 +135,18 @@ Fighter.prototype.jump = function() {
         this.stand()
     }
 
-    console.log(this.y);
-
-    console.log(this.isJumping())
 }
 
 Fighter.prototype.isJumping = function(){
     return this.y < this.y0;
 }
 
-Fighter.prototype.bend = function() {
-
-}
-
 
 Fighter.prototype.move = function(){
     //this.state = 'move';
     if(this.x <= 0) return;
+
+    this.faced = 'left' ? this.x -= this.vx : this.x += this.vx;
 
     this.attack = false;
   
@@ -145,7 +156,7 @@ Fighter.prototype.move = function(){
     this.img.frames = 6;
     this.img.animateEvery = 30;
 
-    this.x -= this.vx;
+    //this.x -= this.vx;
 }
 
 Fighter.prototype.goBack = function() {
@@ -153,7 +164,10 @@ Fighter.prototype.goBack = function() {
 
     if(this.x + this.width >= this.ctx.canvas.width ) return
 
+    this.faced = 'left' ? this.x += this.vx : this.x -= this.vx;
+
     this.attack = false;
+    this.defend = true;
 
     this.img.rowIndex = 345; 
     this.width = 145; 
@@ -161,13 +175,14 @@ Fighter.prototype.goBack = function() {
     this.img.frames = 6;
     this.img.animateEvery = 15;
 
-    this.x += this.vx;
+    //this.x += this.vx;
 }
 
 Fighter.prototype.punch = function() {
     this.state = 'punch';
     
     this.attack = true;
+    this.defend = false;
 
     this.img.rowIndex = 755;
     this.img.frames = 6;
@@ -185,6 +200,7 @@ Fighter.prototype.punch = function() {
 Fighter.prototype.kick = function(){
     this.state = 'kick';
     this.attack = true;
+    this.defend = false;
 
     this.img.rowIndex = 935;
     this.img.frames = 5; 
@@ -199,11 +215,28 @@ Fighter.prototype.kick = function(){
     }
 }
 
-Fighter.prototype.receiveDamage = function(){
+Fighter.prototype.bend = function(){
+    this.state = 'bend';
+    this.attack = false;
+    this.defend = true;
+
+    this.img.rowIndex = 1155;
+    this.img.frames = 2; 
+    this.width = 135; 
+    this.height = 145;
+    this.y = 420
+
+    if(this.img.frameIndex >= this.img.frames) {
+        this.img.frameIndex = 0;
+        this.stand();
+    }
+}
+
+Fighter.prototype.updateDamage = function(){
     this.health--;
-    this.healthbar.width-- //TODO: restar a health la fuerza de cada ataque
+    this.healthbar.width -= 5 //TODO: restar a health la fuerza de cada ataque
     this.displace();
-   // this.healthbar.draw(this.health);
+
     console.log(this.health);
 }
 
@@ -223,14 +256,33 @@ Fighter.prototype.displace = function(){
 
 }
 
-Fighter.prototype.isCollision = function(rival) {
+Fighter.prototype.receiveDamage = function(rival) {
     var rx = (rival.x <= this.x + this.width) && (this.x <= rival.x + rival.width);
 
     var ry = this.y + this.height >= rival.y;
 
+    if(this.isDead()) {
+        this.state = 'dead';
+        
+        rival.state = 'win';
+    }
+
     if(rx && ry){
-        this.receiveDamage();
+        this.updateDamage();
         console.log('toma hostia');
     }  
 }
 
+Fighter.prototype.isDead = function() {
+    return this.health <= 0;
+}
+
+Fighter.prototype.lose = function() {
+    // call to sprite frames when fighter dies
+    // stop game
+}
+
+Fighter.prototype.win = function() {
+    // call to sprite frames when fighter wins
+    
+}

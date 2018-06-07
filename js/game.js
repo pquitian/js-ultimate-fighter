@@ -27,11 +27,10 @@ Game.prototype.start = function() {
 
     this.intervalId = setInterval(function() {
         this.drawAll();
+        this.playerFaced();
         this.fight();
-        this.gameOver();
 
     }.bind(this), 16);
-
     
 };
 
@@ -39,27 +38,36 @@ Game.prototype.setKeyboardListeners = function() {
     
          //this.ryu.onKeyDown(event.keyCode);
          //this.soundHandler();
-
 }
 
 Game.prototype.drawAll = function(){
     
     this.bg.draw();
     
-    
     this.goku.draw();
     this.ryu.draw();
     
+}
 
+Game.prototype.playerFaced = function() {
+    this.goku.checkIfFaced(this.ryu);
+    this.ryu.checkIfFaced(this.goku);
+
+    //console.warn('Goku:' + this.goku.faced);
+    //console.log('Ryu: ' + this.ryu.faced);
 }
 
 Game.prototype.fight = function() {
     if(this.goku.attack) {
-      this.ryu.isCollision(this.goku)
+      this.ryu.receiveDamage(this.goku)
     }
 
     if (this.ryu.attack) {
-        this.goku.isCollision(this.ryu)
+        this.goku.receiveDamage(this.ryu)
+    }
+
+    if (this.goku.isDead() || this.ryu.isDead()) {
+        clearInterval(this.intervalId);
     }
 }
 
@@ -75,12 +83,14 @@ Game.prototype.setListeners = function() {
         if(this.keys[68]) this.ryu.goBack();
         if(this.keys[49]) this.ryu.punch();
         if(this.keys[50]) this.ryu.kick();
+        if(this.keys[83]) this.ryu.bend();
 
         if(this.keys[37]) this.goku.move();
         if(this.keys[39]) this.goku.goBack();
         if(this.keys[38]) this.goku.jump();
         if(this.keys[77]) this.goku.punch();
         if(this.keys[78]) this.goku.kick();
+        if(this.keys[40]) this.goku.bend();
 
    }.bind(this)
    
@@ -91,9 +101,11 @@ Game.prototype.setListeners = function() {
 }
 
 Game.prototype.gameOver = function(){
-    if(this.ryu.health <= 0 || this.goku.health <= 0) {
-        console.log('GAME OVER');
-    }
+    // if(this.ryu.health <= 0 || this.goku.health <= 0) {
+    //     console.log('GAME OVER');
+    // }
+
+    console.log('GAME OVER');
 }
 
 Game.prototype.soundHandler = function() {
