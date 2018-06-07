@@ -4,14 +4,23 @@ function Goku(ctx, imagesource) {
     
 
     this.faced = 'left';
+
+    this.healthbar.x = 900;
+
+    
+
+    //this.setListeners();
+    
 }
 
 Goku.prototype = Object.create(Fighter.prototype); 
 Goku.prototype.constructor = Goku; 
 
-Goku.prototype.TOP = 38;
-Goku.prototype.DOWN = 40;
-Goku.prototype.LEFT = 37;
-Goku.prototype.RIGHT = 39;
-Goku.prototype.PUNCH = 77;
-Goku.prototype.KICK = 78;
+// Goku.prototype.TOP = 38;
+// Goku.prototype.DOWN = 40;
+// Goku.prototype.LEFT = 37;
+// Goku.prototype.RIGHT = 39;
+// Goku.prototype.PUNCH = 77;
+// Goku.prototype.KICK = 78;
+
+

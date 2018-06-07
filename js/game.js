@@ -14,8 +14,11 @@ function Game(canvas) {
         "img/fighters/ryu_4.png", 
     );
 
-    this.setKeyboardListeners();
     
+
+    this.keys = [];
+    this.setListeners();
+
 }
 
 Game.prototype.start = function() {
@@ -32,11 +35,21 @@ Game.prototype.start = function() {
     
 };
 
+Game.prototype.setKeyboardListeners = function() {
+    
+         //this.ryu.onKeyDown(event.keyCode);
+         //this.soundHandler();
+
+}
+
 Game.prototype.drawAll = function(){
+    
     this.bg.draw();
+    
     
     this.goku.draw();
     this.ryu.draw();
+    
 
 }
 
@@ -50,40 +63,38 @@ Game.prototype.fight = function() {
     }
 }
 
-// Game.prototype.fight = function() {
-//     if(this.goku.attack){
-//         var gx = (this.goku.x <= this.ryu.x + this.ryu.width) && (this.ryu.x <= this.goku.x + this.goku.width);
 
-//         var gy = this.ryu.y + this.ryu.height >= this.goku.y;
-
-//         if(gx && gy){
-//             this.ryu.receiveDamage();
-//             console.log('toma hostia');
-//         }  
-//     }
-
-//     
+Game.prototype.setListeners = function() {
     
-// }
+    document.onkeydown = function(e) {
+        this.soundHandler();
+        this.keys[e.keyCode] = true;
+
+        if(this.keys[87]) this.ryu.jump();
+        if(this.keys[65]) this.ryu.move();
+        if(this.keys[68]) this.ryu.goBack();
+        if(this.keys[49]) this.ryu.punch();
+        if(this.keys[50]) this.ryu.kick();
+
+        if(this.keys[37]) this.goku.move();
+        if(this.keys[39]) this.goku.goBack();
+        if(this.keys[38]) this.goku.jump();
+        if(this.keys[77]) this.goku.punch();
+        if(this.keys[78]) this.goku.kick();
+
+   }.bind(this)
+   
+   
+   document.onkeyup = function(event) {
+       this.keys[event.keyCode] = false;  
+   }.bind(this)
+}
 
 Game.prototype.gameOver = function(){
-    if(this.ryu.health <= 0) {
+    if(this.ryu.health <= 0 || this.goku.health <= 0) {
         console.log('GAME OVER');
     }
 }
-
-Game.prototype.setKeyboardListeners = function() {
-    document.onkeydown = function(event) {
-      this.goku.onKeyDown(event.keyCode);
-      this.ryu.onKeyDown(event.keyCode);
-      this.soundHandler();
-    }.bind(this);
-  
-    document.onkeyup = function(event) {
-      this.goku.onKeyUp(event.keyCode);
-      this.ryu.onKeyUp(event.keyCode);
-    }.bind(this);
-};
 
 Game.prototype.soundHandler = function() {
     var gokuPunch = new Audio('sounds/goku/punch.wav');

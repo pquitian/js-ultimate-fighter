@@ -8,7 +8,7 @@ function Fighter(ctx) {
     this.y0 = 400;
     this.y = this.y0;
 
-    this.vx = 10;
+    this.vx = 30;
     this.vy = 0; 
     this.gravity = 0.5;
 
@@ -19,7 +19,10 @@ function Fighter(ctx) {
 
     this.state = 'stand';
     this.health = 100;
-    //this.healthBar = new HealthBar();
+    //this.barPos = 10;
+
+    this.healthbar = new HealthBar(this.ctx, this.health, this.barPos);
+    this.keys = [];
     
 }
 
@@ -68,7 +71,8 @@ Fighter.prototype.draw = function() {
        this.animate();
         this.drawCount = 0;
     }
-
+    this.healthbar.draw();
+    
 }
 
 // Basic Movements
@@ -86,9 +90,11 @@ Fighter.prototype.stand = function() {
     if(this.img.frameIndex >= this.img.frames) {
         this.img.frameIndex = 0;
     }
+    
 }
 
 Fighter.prototype.jump = function() {
+
     this.state = 'jump';
  
     this.attack = false;
@@ -97,20 +103,29 @@ Fighter.prototype.jump = function() {
     this.width = 145; 
     this.height = 180; 
     this.img.frames = 6;
-    this.img.animateEvery = 6;
+    this.img.animateEvery = 8;
 
     this.vy += this.gravity;
     this.y *= this.vy;
 
-    if(this.isJumping()){
+    // if(this.img.frameIndex >= this.img.frames) {
+    //     this.img.frameIndex = 0;
+    // }
+
+    if(!this.isJumping()){   
         this.vy = 0; 
         this.y = this.y0;
         this.state = 'stand'
+        this.stand()
     }
+
+    console.log(this.y);
+
+    console.log(this.isJumping())
 }
 
 Fighter.prototype.isJumping = function(){
-    return this.y >= this.y0;
+    return this.y < this.y0;
 }
 
 Fighter.prototype.bend = function() {
@@ -185,10 +200,11 @@ Fighter.prototype.kick = function(){
 }
 
 Fighter.prototype.receiveDamage = function(){
-    this.health--; //TODO: restar a health la fuerza de cada ataque
+    this.health--;
+    this.healthbar.width-- //TODO: restar a health la fuerza de cada ataque
     this.displace();
+   // this.healthbar.draw(this.health);
     console.log(this.health);
-    
 }
 
 Fighter.prototype.displace = function(){
@@ -218,33 +234,3 @@ Fighter.prototype.isCollision = function(rival) {
     }  
 }
 
-
-//Key listeners
-
-Fighter.prototype.onKeyDown = function(code) {
-    switch(code) {
-        case this.RIGHT:
-            this.goBack();
-            break;
-        case this.LEFT:
-            this.move();
-            break;
-        case this.PUNCH: 
-            this.punch();
-            break;
-        case this.TOP: 
-            this.jump();
-            break;
-        case this.KICK: 
-            this.kick();
-            break;
-    }
-};
-
-
-Fighter.prototype.onKeyUp = function(code) {
-    switch(code) {
-        
-    }
-    
-};
