@@ -1,9 +1,11 @@
-function Goku(ctx, imagesource) {
-    Fighter.call(this, ctx, imagesource);
+function Goku(ctx, imagesource, projectile) {
+    Fighter.call(this, ctx, projectile);
     this.img.src = imagesource;
     
 
     this.faced = 'left';
+
+    
 
     this.healthbar.x = (this.ctx.canvas.width - this.healthbar.width) -10;
     //this.healthbar.mainColor = '#2dabea';
@@ -19,7 +21,4 @@ function Goku(ctx, imagesource) {
 
 Goku.prototype = Object.create(Fighter.prototype); 
 Goku.prototype.constructor = Goku; 
-
-
-
 

@@ -1,5 +1,5 @@
-function Ryu(ctx, imagesource) {
-    Fighter.call(this, ctx, imagesource);
+function Ryu(ctx, imagesource, projectile) {
+    Fighter.call(this, ctx, projectile);
     this.img.src = imagesource;
 
     this.x = 200;

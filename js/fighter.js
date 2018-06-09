@@ -1,4 +1,4 @@
-function Fighter(ctx) {
+function Fighter(ctx, projectile) {
     this.ctx = ctx;
 
     this.img = new Image();
@@ -28,8 +28,13 @@ function Fighter(ctx) {
     this.healthbar = new HealthBar(this.ctx, this.health);
     this.keys = [];
 
-    this.projectile = [];
+    this.projectile = projectile;
     
+    
+}
+
+Fighter.prototype.collide = function(p) {
+    return p.x < this.x + this.width;
 }
 
 Fighter.prototype.animate = function() {
@@ -92,6 +97,7 @@ Fighter.prototype.draw = function() {
     this.projectile.forEach(function(projectile) {
         projectile.draw();
         projectile.move();
+
         //console.log(projectile.x);
         //projectile.checkCollision(projectile);
     })
@@ -105,6 +111,7 @@ Fighter.prototype.draw = function() {
     // if(b < a){
     //     alert('boom');
     // }
+    console.log(this.width);
 }
 
 // CKECKERS:
@@ -345,26 +352,20 @@ Fighter.prototype.specialAttack = function(){
 
     if(this.img.frameIndex >= this.img.frames) {
         this.img.frameIndex = 0;
+        this.launchAttack();
         this.state = 'stand';
     }
-    this.launchAttack();
+    
 }
 
 Fighter.prototype.launchAttack = function(){
-
     if(this.projectile.length < 1) {
-        this.projectile.push(new Projectile(this.ctx, this.x, this.y));
+        this.projectile.push(new Projectile(this.ctx, this.x, this.y + 50, this));
     }
     else {
         this.projectile.pop();
     }
 }
-
-// Fighter.prototype.canAttack = function(){
-//     this.projectile.some();
-// }
-
-
 
 
 

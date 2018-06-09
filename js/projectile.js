@@ -1,4 +1,4 @@
-function Projectile(ctx, x, y){
+function Projectile(ctx, x, y, fighter){
     this.ctx = ctx;
 
     this.img = new Image;
@@ -17,6 +17,11 @@ function Projectile(ctx, x, y){
     this.y = y;
 
     this.vx = 3;
+
+    if (fighter.faced !== "right")
+        this.vx *= -1;
+
+    this.fighter = fighter;
 }
 
 Projectile.prototype.draw = function(){
@@ -35,17 +40,10 @@ Projectile.prototype.draw = function(){
         this.height
     );
 
-    // this.ctx.drawImage(
-    //     this.img,
-    //     this.x, 
-    //     this.y,
-    //     this.width,
-    //     this.height
-    // );
 }
 
 Projectile.prototype.move = function(){
-    this.x -= this.vx;
+    this.x += this.vx;
     this.animate();
     console.log(this.img.frameIndex, this.drawCount)
 }
@@ -63,4 +61,5 @@ Projectile.prototype.animate = function() {
 Projectile.prototype.isOutside = function(){
     return this.x + this.width < 0 || this.x > this.ctx.canvas.width;
 }
+
 

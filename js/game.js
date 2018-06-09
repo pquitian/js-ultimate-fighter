@@ -1,17 +1,20 @@
 function Game(canvas) {
     this.ctx = canvas.getContext("2d");
     
+    this.projectile = [];
+
     this.bg = new Landscape(this.ctx);
-    this.fighter = new Fighter(this.ctx);
 
     this.goku = new Goku(
         this.ctx, 
         "img/fighters/goku_6.png", 
+        this.projectile
     );
 
     this.ryu = new Ryu(
         this.ctx, 
-        "img/fighters/ryu_6.png", 
+        "img/fighters/ryu_6.png",
+        this.projectile
     );
 
     this.keys = [];
@@ -27,6 +30,8 @@ Game.prototype.start = function() {
         this.playerFaced();
         this.fight();
 
+        this.checkCollisions();
+
     }.bind(this), 16);
     
 };
@@ -36,6 +41,16 @@ Game.prototype.start = function() {
 //          this.ryu.onKeyDown(event.keyCode);
 //          this.soundHandler();
 // }
+
+Game.prototype.checkCollisions = function() {
+    this.projectile.forEach(function(p) {
+        var target = p.fighter === this.goku ? this.ryu : this.goku;
+
+        if (target.collide(p)) {
+            target.updateDamage();
+        }
+    }.bind(this))
+}
 
 Game.prototype.drawAll = function(){
     
