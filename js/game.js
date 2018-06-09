@@ -78,31 +78,49 @@ Game.prototype.setListeners = function() {
         
         this.keys[e.keyCode] = true;
         
-
-        if(this.keys[87]) this.ryu.jump();
-        if(this.keys[65]) this.ryu.move();
-        if(this.keys[68]) this.ryu.goBack();
-        if(this.keys[49]) this.ryu.punch();
-        if(this.keys[50]) this.ryu.kick();
-        if(this.keys[83]) this.ryu.bend();
-
-
-        // Goku
-        if(this.keys[37]) this.goku.move();
-        if(this.keys[39]) this.goku.goBack();
-        if(this.keys[38]) {
-            this.goku.jump();
-            this.goku.gokuJump.play();
-        } 
-        if(this.keys[77]){
-            this.goku.punch();
-            this.goku.gokuPunch.play();
-        } 
-        if(this.keys[78]){
-            this.goku.kick();
-            this.goku.gokuKick.play();
-        } 
-        if(this.keys[40]) this.goku.bend();
+        switch(e.keyCode){
+            //Goku
+            case 37:
+                this.goku.move();
+                break;
+            case 39:
+                this.goku.goBack();
+                break;
+            case 38:
+                this.goku.jump();
+                this.goku.gokuJump.play();
+                break;
+            case 77: 
+                this.goku.punch();
+                this.goku.gokuPunch.play();
+                break;
+            case 78:
+                this.goku.kick();
+                this.goku.gokuKick.play();
+                break;
+            case 40:
+                this.goku.bend();
+                break; 
+            //Ryu
+            case 87:
+                this.ryu.jump();
+                break;
+            case 65:
+                this.ryu.move();
+                break;
+            case 68:
+                this.ryu.goBack();
+                break;
+            case 49:
+                this.ryu.punch();
+                break;
+            case 50:
+                this.ryu.kick();
+                break;
+            case 83:
+                this.ryu.bend();
+                break;
+        }
 
    }.bind(this)
    
