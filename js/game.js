@@ -34,11 +34,11 @@ Game.prototype.start = function() {
     
 };
 
-Game.prototype.setKeyboardListeners = function() {
+// Game.prototype.setKeyboardListeners = function() {
     
-         //this.ryu.onKeyDown(event.keyCode);
-         //this.soundHandler();
-}
+//          this.ryu.onKeyDown(event.keyCode);
+//          this.soundHandler();
+// }
 
 Game.prototype.drawAll = function(){
     
@@ -73,10 +73,11 @@ Game.prototype.fight = function() {
 
 
 Game.prototype.setListeners = function() {
-    
+   
     document.onkeydown = function(e) {
-        this.soundHandler();
+        
         this.keys[e.keyCode] = true;
+        
 
         if(this.keys[87]) this.ryu.jump();
         if(this.keys[65]) this.ryu.move();
@@ -85,11 +86,22 @@ Game.prototype.setListeners = function() {
         if(this.keys[50]) this.ryu.kick();
         if(this.keys[83]) this.ryu.bend();
 
+
+        // Goku
         if(this.keys[37]) this.goku.move();
         if(this.keys[39]) this.goku.goBack();
-        if(this.keys[38]) this.goku.jump();
-        if(this.keys[77]) this.goku.punch();
-        if(this.keys[78]) this.goku.kick();
+        if(this.keys[38]) {
+            this.goku.jump();
+            this.goku.gokuJump.play();
+        } 
+        if(this.keys[77]){
+            this.goku.punch();
+            this.goku.gokuPunch.play();
+        } 
+        if(this.keys[78]){
+            this.goku.kick();
+            this.goku.gokuKick.play();
+        } 
         if(this.keys[40]) this.goku.bend();
 
    }.bind(this)
@@ -101,30 +113,8 @@ Game.prototype.setListeners = function() {
 }
 
 Game.prototype.gameOver = function(){
-    // if(this.ryu.health <= 0 || this.goku.health <= 0) {
-    //     console.log('GAME OVER');
-    // }
-
     console.log('GAME OVER');
 }
 
-Game.prototype.soundHandler = function() {
-    var gokuPunch = new Audio('sounds/goku/punch.wav');
-    var gokuKick = new Audio('sounds/goku/kick.wav');
-    var gokuJump = new Audio('sounds/goku/jump.wav');
 
-    switch(this.goku.state){
-        case 'punch':
-            gokuPunch.play();
-            break;
-        case 'kick':
-            gokuKick.play();
-            break; 
-        case 'jump':
-            gokuJump.play();
-            break;
-    }
-
-    
-}
 
