@@ -40,7 +40,6 @@ Game.prototype.start = function() {
 Game.prototype.drawAll = function(){
     
     this.bg.draw();
-    
     this.goku.draw();
     this.ryu.draw();
     
@@ -99,6 +98,12 @@ Game.prototype.setListeners = function() {
             case 40:
                 this.goku.bend();
                 break; 
+            case 32: 
+                this.goku.highKick(); 
+                break;
+            case 16:
+                this.goku.specialAttack();
+                break; 
             //Ryu
             case 87:
                 this.ryu.jump();
@@ -117,6 +122,12 @@ Game.prototype.setListeners = function() {
                 break;
             case 83:
                 this.ryu.bend();
+                break;
+            case 52: 
+                this.ryu.highKick();
+                break;
+            case 84: 
+                this.ryu.specialAttack();
                 break;
         }
 
