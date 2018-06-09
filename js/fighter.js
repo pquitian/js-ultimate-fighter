@@ -21,6 +21,7 @@ function Fighter(ctx) {
     this.drawCount = 0;
 
     this.state = 'stand';
+    this.hasDied = false;
     this.health = 100;
     //this.barPos = 10;
 
@@ -57,7 +58,9 @@ Fighter.prototype.animate = function() {
 }
 
 Fighter.prototype.draw = function() {
-    this.drawCount++;
+    if(!this.hasDied) {
+        this.drawCount++;
+    }
     
     this.ctx.drawImage(
         this.img,
@@ -67,11 +70,11 @@ Fighter.prototype.draw = function() {
         this.height,
         this.x, 
         this.y, 
-        this.width , 
+        this.width, 
         this.height
     );
 
-    if (this.drawCount % this.img.animateEvery === 0){
+    if (this.drawCount % this.img.animateEvery === 0 && !(this.hasDied)){
        this.animate();
         this.drawCount = 0;
     }
@@ -233,8 +236,8 @@ Fighter.prototype.bend = function(){
 }
 
 Fighter.prototype.updateDamage = function(){
-    this.health--;
-    this.healthbar.width -= 5 //TODO: restar a health la fuerza de cada ataque
+    this.health -=20;
+    this.healthbar.width -= 5*  //TODO: restar a health la fuerza de cada ataque
     this.displace();
 
     console.log(this.health);
@@ -277,12 +280,32 @@ Fighter.prototype.isDead = function() {
     return this.health <= 0;
 }
 
-Fighter.prototype.lose = function() {
+Fighter.prototype.dies = function() {
     // call to sprite frames when fighter dies
     // stop game
+    this.img.rowIndex = 1910;
+    this.width = 240; 
+    this.height = 190; 
+    this.img.frames = 4;
+    this.img.animateEvery = 15;
+
+    if(this.img.frameIndex >= this.img.frames) {
+        this.img.frameIndex = 3;
+        
+    }
+
 }
 
 Fighter.prototype.win = function() {
     // call to sprite frames when fighter wins
-    
+    this.img.rowIndex = 1670;
+    this.width = 138; 
+    this.height = 240; 
+    this.img.frames = 7;
+    this.img.animateEvery = 8;
+
+    if(this.img.frameIndex >= this.img.frames) {
+        this.img.frameIndex = 0;
+    }
+
 }

@@ -6,19 +6,16 @@ function Game(canvas) {
 
     this.goku = new Goku(
         this.ctx, 
-        "img/fighters/goku_4.png", 
+        "img/fighters/goku_6.png", 
     );
 
     this.ryu = new Ryu(
         this.ctx, 
-        "img/fighters/ryu_4.png", 
+        "img/fighters/ryu_6.png", 
     );
-
-    
 
     this.keys = [];
     this.setListeners();
-
 }
 
 Game.prototype.start = function() {
@@ -67,7 +64,8 @@ Game.prototype.fight = function() {
     }
 
     if (this.goku.isDead() || this.ryu.isDead()) {
-        clearInterval(this.intervalId);
+        //clearInterval(this.intervalId);
+        this.gameOver();
     }
 }
 
@@ -124,13 +122,24 @@ Game.prototype.setListeners = function() {
 
    }.bind(this)
    
-   
    document.onkeyup = function(event) {
        this.keys[event.keyCode] = false;  
    }.bind(this)
 }
 
 Game.prototype.gameOver = function(){
+    document.onkeydown = null;
+    if(this.goku.isDead()){
+        this.goku.dies();
+        this.ryu.win();
+        //clearInterval(this.intervalId)
+    }
+    if(this.ryu.isDead()){
+        this.ryu.dies();
+        this.goku.win();
+        //clearInterval(this.intervalId)
+    }
+
     console.log('GAME OVER');
 }
 
