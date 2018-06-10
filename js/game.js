@@ -114,7 +114,8 @@ Game.prototype.setListeners = function() {
                 this.goku.bend();
                 break; 
             case 32: 
-                this.goku.highKick(); 
+                this.goku.highKick();
+                this.goku.gokuHighKick.play(); 
                 break;
             case 16:
                 this.goku.specialAttack();
@@ -122,6 +123,7 @@ Game.prototype.setListeners = function() {
             //Ryu
             case 87:
                 this.ryu.jump();
+                this.ryu.ryuJump.play();
                 break;
             case 65:
                 this.ryu.move();
@@ -131,9 +133,11 @@ Game.prototype.setListeners = function() {
                 break;
             case 49:
                 this.ryu.punch();
+                this.ryu.ryuPunch.play();
                 break;
             case 50:
                 this.ryu.kick();
+                this.ryu.ryuKick.play();
                 break;
             case 83:
                 this.ryu.bend();
@@ -143,6 +147,7 @@ Game.prototype.setListeners = function() {
                 break;
             case 84: 
                 this.ryu.specialAttack();
+                this.ryu.ryuHadouken.play();
                 break;
         }
 

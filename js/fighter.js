@@ -30,11 +30,19 @@ function Fighter(ctx, projectile) {
 
     this.projectile = projectile;
     
-    
 }
 
 Fighter.prototype.collide = function(p) {
-    return p.x < this.x + this.width;
+    //TODO if this is faced left
+    if(this.faced === 'right'){
+        return p.x < this.x + this.width;
+    } else {
+        return p.x > this.x;
+    }
+    
+
+    // TODO: if this is faced right
+    // TODO check vertical collision
 }
 
 Fighter.prototype.animate = function() {
@@ -392,7 +400,7 @@ Fighter.prototype.win = function() {
     this.height = 240; 
     this.img.frames = 7;
     this.img.animateEvery = 8;
-    this.y = 380;
+    this.y = 360;
 
     if(this.img.frameIndex >= this.img.frames) {
         this.img.frameIndex = 0; 
