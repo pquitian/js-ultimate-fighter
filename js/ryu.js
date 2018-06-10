@@ -1,6 +1,7 @@
 function Ryu(ctx, imagesource, projectile) {
     Fighter.call(this, ctx, projectile);
     this.img.src = imagesource;
+    this.name = 'Ryu';
 
     this.fighterShot.src = 'img/fighters/ryu_shot.png';
     this.shotX = 10;

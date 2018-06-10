@@ -157,12 +157,11 @@ Game.prototype.setListeners = function() {
 }
 
 Game.prototype.gameOver = function(){
-
     this.soundTheme.pause();
-    
     this.endTheme.play();
 
     document.onkeydown = null;
+
     if(this.goku.isDead()){
         this.goku.dies();
         this.ryu.win();

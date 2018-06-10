@@ -1,6 +1,7 @@
 function Goku(ctx, imagesource, projectile) {
     Fighter.call(this, ctx, projectile);
     this.img.src = imagesource;
+    this.name = 'Goku';
 
     this.fighterShot.src = 'img/fighters/goku_shot.png';
     this.shotX = (this.ctx.canvas.width) -90, 

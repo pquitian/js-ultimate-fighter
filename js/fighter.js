@@ -33,6 +33,7 @@ function Fighter(ctx, projectile) {
     this.keys = [];
 
     this.projectile = projectile;
+    this.damageSound = new Audio('sounds/damage.wav');
     
 }
 
@@ -42,7 +43,6 @@ Fighter.prototype.collide = function(p) {
     } else {
         return p.x > this.x;
     }
-    // TODO: if this is faced right
     // TODO check vertical collision
 }
 
@@ -296,7 +296,6 @@ Fighter.prototype.receiveDamage = function(rival) {
 
     if(this.isDead()) {
         this.state = 'dead';
-        
         rival.state = 'win';
     }
 
@@ -305,15 +304,21 @@ Fighter.prototype.receiveDamage = function(rival) {
         console.log('toma hostia');
     }
 
-    //checkprojectile: 
-    
-    
 }
 
 Fighter.prototype.updateDamage = function(){
-    this.health -=20;
-    this.healthbar.width -= 100  //TODO: restar a health la fuerza de cada ataque
-    this.displace();
+
+    if(this.isDead()) {
+        this.state = 'dead';
+    } else {
+        if(this.defend === true){
+            this.damageSound.play();
+        } else {
+            this.health--;
+            this.healthbar.width -= 5; //TODO: restar a health la fuerza de cada ataque
+            this.displace();
+        }
+    }
 
     console.log('health' + this.health);
 }
@@ -378,7 +383,7 @@ Fighter.prototype.specialAttack = function(){
 
 Fighter.prototype.launchAttack = function(){
     if(this.projectile.length < 1) {
-        this.projectile.push(new Projectile(this.ctx, this.x, this.y + 50, this));
+        this.projectile.push(new Projectile(this.ctx, this.x, this.y + 60, this));
     }
     else {
         this.projectile.pop();
@@ -395,6 +400,7 @@ Fighter.prototype.dies = function(){
     this.height = 190; 
     this.img.frames = 4;
     this.img.animateEvery = 15;
+    this.y = this.y0;
 
     if(this.img.frameIndex >= this.img.frames) {
         this.img.frameIndex = 3;
@@ -415,5 +421,9 @@ Fighter.prototype.win = function() {
     if(this.img.frameIndex >= this.img.frames) {
         this.img.frameIndex = 0; 
     }
+
+    this.ctx.font = "120px VT323";
+    this.ctx.fillStyle = "white";
+    this.ctx.fillText(this.name + ' wins!',this.ctx.canvas.width * 0.2,this.ctx.canvas.height / 2);
 
 }
