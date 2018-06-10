@@ -33,14 +33,11 @@ function Fighter(ctx, projectile) {
 }
 
 Fighter.prototype.collide = function(p) {
-    //TODO if this is faced left
     if(this.faced === 'right'){
         return p.x < this.x + this.width;
     } else {
         return p.x > this.x;
     }
-    
-
     // TODO: if this is faced right
     // TODO check vertical collision
 }
@@ -105,20 +102,8 @@ Fighter.prototype.draw = function() {
     this.projectile.forEach(function(projectile) {
         projectile.draw();
         projectile.move();
-
-        //console.log(projectile.x);
-        //projectile.checkCollision(projectile);
     })
 
-
-    // var a = (this.y + this.width + this.height)
-    // var b = (this.projectile[0].x)
-    // console.log(this.projectile);
-    // console.log('HOLA');
-
-    // if(b < a){
-    //     alert('boom');
-    // }
     console.log(this.width);
 }
 

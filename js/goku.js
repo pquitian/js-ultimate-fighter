@@ -18,6 +18,7 @@ function Goku(ctx, imagesource, projectile) {
     this.gokuKick = new Audio('sounds/goku/kick.wav');
     this.gokuJump = new Audio('sounds/goku/jump.wav');
     this.gokuHighKick = new Audio('sounds/goku/highkick.wav');
+    this.gokuKame = new Audio('sounds/goku/kamehameha.wav');
 }
 
 Goku.prototype = Object.create(Fighter.prototype); 

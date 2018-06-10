@@ -12,10 +12,8 @@ function Ryu(ctx, imagesource, projectile) {
     this.ryuPunch = new Audio('sounds/ryu/punch.wav');
     this.ryuKick = new Audio('sounds/ryu/kick.wav');
     this.ryuJump = new Audio('sounds/ryu/jump.wav');
-    this.ryuHadouken = new Audio('sounds/ryu/hadouken.wav');
-
-
-
+    this.ryuHadouken = new Audio('sounds/ryu/hadouken_2.wav');
+    this.ryuHighKick = new Audio('sounds/ryu/highkick.wav');
 }
 
 Ryu.prototype = Object.create(Fighter.prototype); 

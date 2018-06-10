@@ -19,10 +19,12 @@ function Game(canvas) {
 
     this.keys = [];
     this.setListeners();
+
+    this.endTheme = new Audio('sounds/theme/end-theme_' + Math.round( (Math.random() * 3) + 1) + '.wav' );
 }
 
 Game.prototype.start = function() {
-    this.soundTheme = new Audio('sounds/gbz-theme.mp3');
+    this.soundTheme = new Audio('sounds/theme/main-theme_' + Math.round( (Math.random() * 2) + 1) + '.mp3' );
     this.soundTheme.play();
 
     this.intervalId = setInterval(function() {
@@ -35,12 +37,6 @@ Game.prototype.start = function() {
     }.bind(this), 16);
     
 };
-
-// Game.prototype.setKeyboardListeners = function() {
-    
-//          this.ryu.onKeyDown(event.keyCode);
-//          this.soundHandler();
-// }
 
 Game.prototype.checkCollisions = function() {
     this.projectile.forEach(function(p) {
@@ -119,6 +115,7 @@ Game.prototype.setListeners = function() {
                 break;
             case 16:
                 this.goku.specialAttack();
+                this.goku.gokuKame.play();
                 break; 
             //Ryu
             case 87:
@@ -144,6 +141,7 @@ Game.prototype.setListeners = function() {
                 break;
             case 52: 
                 this.ryu.highKick();
+                this.ryu.ryuHighKick.play();
                 break;
             case 84: 
                 this.ryu.specialAttack();
@@ -159,6 +157,11 @@ Game.prototype.setListeners = function() {
 }
 
 Game.prototype.gameOver = function(){
+
+    this.soundTheme.pause();
+    
+    this.endTheme.play();
+
     document.onkeydown = null;
     if(this.goku.isDead()){
         this.goku.dies();
