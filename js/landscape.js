@@ -5,7 +5,7 @@ function Landscape(ctx){
     this.height = ctx.canvas.height;
 
     this.img = new Image();
-    this.img.src = "img/tiles/tile_" + Math.round( (Math.random() * 3) + 1) + ".jpg";
+    this.img.src = "img/tiles/tile_" + Math.round( (Math.random() * 5) + 1) + ".jpg";
 
     this.x = 0;
     this.y = 0;
