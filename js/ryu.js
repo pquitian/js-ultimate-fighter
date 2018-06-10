@@ -2,6 +2,9 @@ function Ryu(ctx, imagesource, projectile) {
     Fighter.call(this, ctx, projectile);
     this.img.src = imagesource;
 
+    this.fighterShot.src = 'img/fighters/ryu_shot.png';
+    this.shotX = 10;
+
     this.x = 200;
     this.healthbar.x = 10;
     

@@ -24,7 +24,7 @@ function Game(canvas) {
 }
 
 Game.prototype.start = function() {
-    this.soundTheme = new Audio('sounds/theme/main-theme_' + Math.round( (Math.random() * 2) + 1) + '.mp3' );
+    this.soundTheme = new Audio('sounds/theme/main-theme_' + Math.round( (Math.random() * 1) + 1) + '.mp3' );
     this.soundTheme.play();
 
     this.intervalId = setInterval(function() {

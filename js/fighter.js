@@ -4,6 +4,10 @@ function Fighter(ctx, projectile) {
     this.img = new Image();
     this.img.frameIndex = 0;
 
+    this.fighterShot = new Image();
+    this.shotX = null, 
+    this.shotY = 50,
+
     this.x = this.ctx.canvas.width - 300; 
     this.y0 = 400;
     this.y = this.y0;
@@ -75,6 +79,26 @@ Fighter.prototype.animate = function() {
     }
 }
 
+Fighter.prototype.drawShot = function() {
+    this.ctx.drawImage(
+        this.fighterShot,
+        this.shotX, 
+        this.shotY, 
+        80, 
+        80 
+    );
+
+    this.ctx.strokeStyle = '#fff';  
+    this.ctx.lineWidth = 2; 
+    this.ctx.strokeRect(
+        this.shotX,
+        this.shotY,
+        80,
+        80
+    );
+
+}
+
 Fighter.prototype.draw = function() {
     if(!this.hasDied) {
         this.drawCount++;
@@ -98,6 +122,7 @@ Fighter.prototype.draw = function() {
     }
 
     this.healthbar.draw();
+    this.drawShot();
 
     this.projectile.forEach(function(projectile) {
         projectile.draw();
