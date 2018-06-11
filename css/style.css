@@ -3,14 +3,117 @@
     src: url('https://fonts.googleapis.com/css?family=VT323');
 }
 
-body {
-    margin: 0; 
-    padding: 0;
-    background-color: black; 
+*{
+    box-sizing: border-box;
 }
 
-canvas {
+#main {
+    font-family: 'VT323', monospace;
+}
+
+body {
+    /* margin: 0; 
+    padding: 0; */
+    background-color: black;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-content: center;
+    align-items: center; 
+}
+
+h1 {
+    text-align: center;
+    font-size: 3em; 
+    margin: 20px 0;
+}
+
+#main {
+    background-color: black;
+    color: white;
+    width: 1200px;
+    height: 600px;
+    padding: 0 2.5em;
+    border: 1px solid white;
+}
+#fighters {
+    padding-left: 80px;
+}
+#btn {
+    background-color:#4286f4;
+    color: white;
+    padding: 1em;
+    border: 1px solid #4286f4;
+    font-family: 'VT323', monospace;
+    font-size: 1.8em; 
+    border-radius: 5px;
+}
+
+#btn:hover {
+    cursor: pointer; 
+    background-color: #313abc;
+    border-color: #313abc;
+}
+
+#fighters {
+    display: flex; 
+    flex-flow: row wrap;
+}
+
+.fighter {
+    width: 50%;
+}
+
+
+.fighter header{
+    display: flex; 
+    flex-direction: row; 
+    align-items: center;
+    
+}
+
+.fighter h2 {
+    font-size: 3em;
+    text-decoration: underline;
+    margin-left: 40px;
+}
+
+.fighter img {
+    max-width: 100px;
+}
+
+.key {
+    width: 50px
+}
+
+#espace {
+    width: 100px;
+}
+
+.movements {
+    display: flex; 
+    flex-direction: row;
+    align-items: center;
+}
+
+.movements p {
+    width: 30%; 
+    font-size: 1.5em;
+    margin: 10px 0;
+}
+
+#goto {
     display: block;
-    margin: 0 auto;
-    margin-top: 150px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.cc {
+    display: block;
+    margin-top: 1em;
+}
+
+.cc a  {
+    text-decoration: none;
+    color: white;
 }

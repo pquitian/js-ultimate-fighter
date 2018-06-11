@@ -7,6 +7,71 @@
     <link href="css/style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
+    <div id="main">
+      <h1>Controls</h1>
+      <section id="fighters">
+        <article id="ryu" class="fighter">
+          <header>
+              <img src="img/fighters/ryu_shot.png" alt="Ryu">
+              <h2>Ryu</h2>
+          </header>
+          <div class="movements">
+            <p><strong>Basic movements: </strong></p>
+            <img class="key" src="img/keys/A.png" alt="Left">
+            <img class="key" src="img/keys/D.png" alt="Down">
+            <img class="key" src="img/keys/W.png" alt="Up">
+            <img class="key" src="img/keys/S.png" alt="Right">
+          </div>
+          <div class="movements">
+            <p><strong>Punch: </strong></p>
+            <img class="key" src="img/keys/1.png" alt="Punch">
+          </div>
+          <div class="movements">
+            <p><strong>Kick: </strong></p>
+            <img class="key" src="img/keys/2.png" alt="Kick">
+            <img class="key" src="img/keys/4.png" alt="High kick">
+          </div>
+          <div class="movements">
+            <p><strong>Hadouken: </strong></p>  
+            <img class="key" src="img/keys/T.png" alt="Hadouken">
+          </div>
+        </article>
+
+        <article id="goku" class="fighter">
+          <header>
+              <img src="img/fighters/goku_shot.png" alt="Goku">
+              <h2>Goku</h2>
+          </header>
+          <div class="movements">
+            <p><strong>Basic movements: </strong></p>
+            <img class="key" src="img/keys/gauche.png" alt="Left">
+            <img class="key" src="img/keys/bas.png" alt="Down">
+            <img class="key" src="img/keys/haut.png" alt="Up">
+            <img class="key" src="img/keys/droite.png" alt="Right">
+          </div>
+          <div class="movements">
+            <p><strong>Punch: </strong></p>
+            <img class="key" src="img/keys/M.png" alt="Punch">
+          </div>
+          <div class="movements">
+            <p><strong>Kick: </strong></p>
+            <img class="key" src="img/keys/N.png" alt="Kick">
+            <img id="espace" class="key" src="img/keys/espace.png" alt="High kick">
+          </div>
+          <div class="movements">
+            <p><strong>Kamehameha: </strong></p>
+            <img class="key" src="img/keys/ctrl.png" alt="Kamehameha">
+          </div>
+        </article>
+      </section>
+
+      <section id="goto">
+        <button id="btn">Click to START</button>
+        <small class="cc">Key icons made by <a href="http://www.iconarchive.com/show/keyboard-keys-icons-by-chromatix.1.html">Chromatix</a></small>
+      </section>
+      
+    </div>
+
     <script src="js/projectile.js"></script>
     <script src="js/healthbar.js"></script>
     <script src="js/fighter.js"></script>
