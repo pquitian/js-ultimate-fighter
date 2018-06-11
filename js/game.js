@@ -35,6 +35,7 @@ Game.prototype.start = function() {
         this.checkCollisions();
 
     }.bind(this), 16);
+
     
 };
 
@@ -43,6 +44,7 @@ Game.prototype.checkCollisions = function() {
         var target = p.fighter === this.goku ? this.ryu : this.goku;
 
         if (target.collide(p)) {
+            target === this.goku ? this.ryu.crashProjectile(p, target) : this.goku.crashProjectile(p, target);
             target.updateDamage();
         }
     }.bind(this))
@@ -160,6 +162,8 @@ Game.prototype.gameOver = function(){
     this.soundTheme.pause();
     this.endTheme.play();
 
+    this.status = 'game-over';
+
     document.onkeydown = null;
 
     if(this.goku.isDead()){
@@ -168,12 +172,11 @@ Game.prototype.gameOver = function(){
         //clearInterval(this.intervalId)
     }
     if(this.ryu.isDead()){
+        
         this.ryu.dies();
         this.goku.win();
-        //clearInterval(this.intervalId)
     }
 
-    console.log('GAME OVER');
 }
 
 

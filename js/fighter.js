@@ -43,7 +43,12 @@ Fighter.prototype.collide = function(p) {
     } else {
         return p.x > this.x;
     }
-    // TODO check vertical collision
+}
+
+Fighter.prototype.crashProjectile = function(p, target) {
+    this.projectile.pop();
+    target.health -= 5; 
+    target.healthbar.width -= 25;
 }
 
 Fighter.prototype.animate = function() {
@@ -200,28 +205,25 @@ Fighter.prototype.jump = function() {
 
 
 Fighter.prototype.move = function(){
-    //this.state = 'move';
     if(this.x <= 0) return;
 
-    this.faced = 'left' ? this.x -= this.vx : this.x += this.vx;
-
+    this.x -= this.vx;
+    //this.faced = 'left' ? this.x -= this.vx : this.x += this.vx;
     this.attack = false;
-  
     this.img.rowIndex = 165; 
     this.width = 145;
     this.height = 180; 
     this.img.frames = 6;
     this.img.animateEvery = 30;
 
-    //this.x -= this.vx;
+   
 }
 
 Fighter.prototype.goBack = function() {
-    //this.state = 'go-back'; 
-
     if(this.x + this.width >= this.ctx.canvas.width ) return
 
-    this.faced = 'left' ? this.x += this.vx : this.x -= this.vx;
+    this.x += this.vx;
+    //this.faced = 'left' ? this.x += this.vx : this.x -= this.vx;
 
     this.attack = false;
     this.defend = true;
@@ -231,8 +233,6 @@ Fighter.prototype.goBack = function() {
     this.height = 205; 
     this.img.frames = 6;
     this.img.animateEvery = 15;
-
-    //this.x += this.vx;
 }
 
 Fighter.prototype.punch = function() {
@@ -301,7 +301,6 @@ Fighter.prototype.receiveDamage = function(rival) {
 
     if(rx && ry){
         this.updateDamage();
-        console.log('toma hostia');
     }
 
 }
@@ -315,12 +314,12 @@ Fighter.prototype.updateDamage = function(){
             this.damageSound.play();
         } else {
             this.health--;
-            this.healthbar.width -= 5; //TODO: restar a health la fuerza de cada ataque
+            this.healthbar.width -= 5; 
             this.displace();
         }
     }
 
-    console.log('health' + this.health);
+    //console.log('health' + this.health);
 }
 
 Fighter.prototype.displace = function(){
@@ -387,9 +386,9 @@ Fighter.prototype.launchAttack = function(){
     }
     else {
         this.projectile.pop();
+        this.projectile.push(new Projectile(this.ctx, this.x, this.y + 60, this));
     }
 }
-
 
 
 // GAME OVER STATES:
@@ -422,8 +421,12 @@ Fighter.prototype.win = function() {
         this.img.frameIndex = 0; 
     }
 
+    this.paintWinnerName();    
+
+}
+
+Fighter.prototype.paintWinnerName = function(){
     this.ctx.font = "120px VT323";
     this.ctx.fillStyle = "white";
-    this.ctx.fillText(this.name + ' wins!',this.ctx.canvas.width * 0.2,this.ctx.canvas.height / 2);
-
+    this.ctx.fillText(this.name + ' wins!',this.ctx.canvas.width * 0.35,this.ctx.canvas.height / 2);
 }

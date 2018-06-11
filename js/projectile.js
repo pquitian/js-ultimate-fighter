@@ -10,7 +10,7 @@ function Projectile(ctx, x, y, fighter){
 
     this.drawCount = 0;
 
-    this.width = 85;
+    this.width = 86.5;
     this.height = 50;
 
     this.x = x;
