@@ -39,7 +39,9 @@ function Fighter(ctx, projectile) {
 
 Fighter.prototype.collide = function(p) {
     if(this.faced === 'right'){
-        return p.x < this.x + this.width;
+        var xaxis = p.x < this.x + this.width;
+        var yaxis = p.x < this.y;
+        return xaxis && yaxis;
     } else {
         return p.x > this.x;
     }
@@ -92,6 +94,15 @@ Fighter.prototype.drawShot = function() {
         80, 
         80 
     );
+}
+
+Fighter.prototype.drawPlayerName = function() {
+    this.ctx.font = "40px VT323";
+    this.ctx.fillStyle = "white";
+    this.ctx.fillText(
+        this.name,
+        this.faced === 'right' ? this.shotX + 90 : this.shotX - 80,
+        this.shotY + 30);
 
 }
 
@@ -119,6 +130,7 @@ Fighter.prototype.draw = function() {
 
     this.healthbar.draw();
     this.drawShot();
+    this.drawPlayerName();
 
     this.projectile.forEach(function(projectile) {
         projectile.draw();
@@ -130,7 +142,6 @@ Fighter.prototype.draw = function() {
 
 // CKECKERS:
 Fighter.prototype.checkIfFaced = function(rival) {
-    //console.log(rival);
     var myPos = this.x + this.width;
     var rivPos = rival.x + rival.width;
 
@@ -179,10 +190,6 @@ Fighter.prototype.jump = function() {
     this.vy += this.gravity;
     this.y *= this.vy;
 
-    // if(this.img.frameIndex >= this.img.frames) {
-    //     this.img.frameIndex = 0;
-    // }
-
     if(!this.isJumping()){   
         this.vy = 0; 
         this.y = this.y0;
@@ -191,8 +198,6 @@ Fighter.prototype.jump = function() {
     }
 
 }
-
-
 
 
 Fighter.prototype.move = function(){
@@ -373,11 +378,11 @@ Fighter.prototype.specialAttack = function(){
 
 Fighter.prototype.launchAttack = function(){
     if(this.projectile.length < 1) {
-        this.projectile.push(new Projectile(this.ctx, this.x, this.y + 60, this.width, this));
+        this.projectile.push(new Projectile(this.ctx, this.x, this.y + 90, this.width, this));
     }
     else {
         this.projectile.pop();
-        this.projectile.push(new Projectile(this.ctx, this.x, this.y + 60, this.width, this));
+        this.projectile.push(new Projectile(this.ctx, this.x, this.y + 90, this.width, this));
     }
 }
 
@@ -394,7 +399,6 @@ Fighter.prototype.dies = function(){
 
     if(this.img.frameIndex >= this.img.frames) {
         this.img.frameIndex = 3;
-        
     }
 
 }

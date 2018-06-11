@@ -26,7 +26,6 @@ function Projectile(ctx, x, y, w, fighter){
 
 Projectile.prototype.draw = function(){
     this.drawCount++;
-    //this.drawCount++; 
     
     this.ctx.drawImage(
         this.img,
