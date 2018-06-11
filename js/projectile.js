@@ -1,19 +1,19 @@
-function Projectile(ctx, x, y, fighter){
+function Projectile(ctx, x, y, w, fighter){
     this.ctx = ctx;
 
     this.img = new Image;
     this.img.src = 'img/projectiles/projectile.png';
     this.img.frameIndex = 0;
     this.img.frames = 4;
-    this.img.animateEvery = 50;
-    this.rowIndex = 50;
+    this.img.animateEvery = 2;
+    fighter.faced === 'left' ? this.rowIndex = 50 : this.rowIndex = 0;
 
     this.drawCount = 0;
 
-    this.width = 86.5;
+    this.width = 86;
     this.height = 50;
 
-    this.x = x;
+    fighter.faced === 'left' ? this.x = x : this.x = x + w;
     this.y = y;
 
     this.vx = 3;
@@ -30,7 +30,7 @@ Projectile.prototype.draw = function(){
     
     this.ctx.drawImage(
         this.img,
-        this.img.frameIndex * (this.width / this.img.frames) - 25,
+        this.img.frameIndex * this.width,
         this.rowIndex,
         this.width,
         this.height,

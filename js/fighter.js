@@ -93,15 +93,6 @@ Fighter.prototype.drawShot = function() {
         80 
     );
 
-    this.ctx.strokeStyle = '#fff';  
-    this.ctx.lineWidth = 2; 
-    this.ctx.strokeRect(
-        this.shotX,
-        this.shotY,
-        80,
-        80
-    );
-
 }
 
 Fighter.prototype.draw = function() {
@@ -382,11 +373,11 @@ Fighter.prototype.specialAttack = function(){
 
 Fighter.prototype.launchAttack = function(){
     if(this.projectile.length < 1) {
-        this.projectile.push(new Projectile(this.ctx, this.x, this.y + 60, this));
+        this.projectile.push(new Projectile(this.ctx, this.x, this.y + 60, this.width, this));
     }
     else {
         this.projectile.pop();
-        this.projectile.push(new Projectile(this.ctx, this.x, this.y + 60, this));
+        this.projectile.push(new Projectile(this.ctx, this.x, this.y + 60, this.width, this));
     }
 }
 

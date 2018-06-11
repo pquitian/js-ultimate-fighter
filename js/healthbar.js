@@ -20,9 +20,6 @@ HealthBar.prototype.draw = function() {
     this.ctx.fillStyle = this.mainColor;
     this.ctx.fill();
     this.ctx.globalCompositeOperation='source-over';
-    this.ctx.strokeStyle = 'black';
-    this.ctx.stroke();
-    this.ctx.lineWidth = 3;
     this.ctx.closePath();
 
     this.ctx.beginPath();
