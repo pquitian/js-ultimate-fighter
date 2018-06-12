@@ -47,7 +47,7 @@ Game.prototype.checkCollisions = function() {
             target === this.goku ? this.ryu.crashProjectile(p, target) : this.goku.crashProjectile(p, target);
             target.updateDamage();
         }
-    }.bind(this))
+    }.bind(this));
 }
 
 Game.prototype.drawAll = function(){
@@ -62,8 +62,6 @@ Game.prototype.playerFaced = function() {
     this.goku.checkIfFaced(this.ryu);
     this.ryu.checkIfFaced(this.goku);
 
-    //console.warn('Goku:' + this.goku.faced);
-    //console.log('Ryu: ' + this.ryu.faced);
 }
 
 Game.prototype.fight = function() {

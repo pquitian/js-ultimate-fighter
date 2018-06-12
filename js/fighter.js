@@ -27,7 +27,6 @@ function Fighter(ctx, projectile) {
     this.state = 'stand';
     this.hasDied = false;
     this.health = 100;
-    //this.barPos = 10;
 
     this.healthbar = new HealthBar(this.ctx, this.health);
     this.keys = [];
@@ -204,7 +203,7 @@ Fighter.prototype.move = function(){
     if(this.x <= 0) return;
 
     this.x -= this.vx;
-    //this.faced = 'left' ? this.x -= this.vx : this.x += this.vx;
+    //TODO: this.faced = 'left' ? this.x -= this.vx : this.x += this.vx;
     this.attack = false;
     this.img.rowIndex = 165; 
     this.width = 145;
@@ -219,7 +218,7 @@ Fighter.prototype.goBack = function() {
     if(this.x + this.width >= this.ctx.canvas.width ) return
 
     this.x += this.vx;
-    //this.faced = 'left' ? this.x += this.vx : this.x -= this.vx;
+    //TODO: this.faced = 'left' ? this.x += this.vx : this.x -= this.vx;
 
     this.attack = false;
     this.defend = true;
@@ -314,8 +313,6 @@ Fighter.prototype.updateDamage = function(){
             this.displace();
         }
     }
-
-    //console.log('health' + this.health);
 }
 
 Fighter.prototype.displace = function(){
@@ -335,7 +332,6 @@ Fighter.prototype.displace = function(){
 }
 
 // SPECIAL ATTACKS: 
-
 Fighter.prototype.highKick = function(){
 
     this.state = 'high-kick';
